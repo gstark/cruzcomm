@@ -2,7 +2,7 @@
 
 # DOCKER!
 
-[Docker?! Docker, docker, docker, docker. DOCKER!](https://cdn-images-1.medium.com/max/1600/1*42K-swiwgm3lZ2xRyNU5ow.gif)
+![Docker?! Docker, docker, docker, docker. DOCKER!](https://cdn-images-1.medium.com/max/1600/1*42K-swiwgm3lZ2xRyNU5ow.gif)
 
 ## To initialize the docker stuff
 
