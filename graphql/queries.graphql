@@ -1,0 +1,47 @@
+# Show all channels
+
+{
+  query {
+    allChannels {
+      nodes {
+        id
+        name
+      }
+    }
+  }
+}
+
+
+# All messages for all channels
+{
+  query {
+    allChannels {
+      nodes {
+        id
+        name
+        messages:messagesByChatId {
+          nodes {
+            id
+            message
+          }
+        }
+      }
+    }
+  }
+}
+
+
+# All messages for a single channel
+{
+  channelById(id: 1) {
+    id
+    name
+    messages:messagesByChatId(orderBy:CREATED_AT_ASC) {
+      nodes {
+        id
+        message
+        createdAt
+      }
+    }
+  }
+}
