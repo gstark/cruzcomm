@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  postgraphql:
+    image: postgraphql/postgraphql
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+    links:
+      - postgres
+    #entrypoint: "bash -c 'while ! nc -z localhost 5432; do sleep 1 && echo -n .; done; postgraphql -n 0.0.0.0'"
+    environment:
+      #DB_DEFAULT_ROLE: postgres
+      DB_GRAPHQL_PATH: "/graphql"
+      DB_GRAPHIQL_PATH: "/graphiql"
+      PG_SECRET: "deadbeefcafe"
+      DB_SCHEMA: "public"
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGHOST: postgres
+      PGPORT: 5432
+      PGDATABASE: postgres
+  postgres:
+    build: .

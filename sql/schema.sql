@@ -21,7 +21,7 @@ SET row_security = off;
 CREATE SCHEMA postgraphql_watch;
 
 
-ALTER SCHEMA postgraphql_watch OWNER TO gstark;
+-- ALTER SCHEMA postgraphql_watch OWNER TO gstark;
 
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
@@ -48,7 +48,7 @@ CREATE FUNCTION notify_watchers() RETURNS event_trigger
     AS $$ begin perform pg_notify( 'postgraphql_watch', (select array_to_json(array_agg(x)) from (select schema_name as schema, command_tag as command from pg_event_trigger_ddl_commands()) as x)::text ); end; $$;
 
 
-ALTER FUNCTION postgraphql_watch.notify_watchers() OWNER TO gstark;
+-- ALTER FUNCTION postgraphql_watch.notify_watchers() OWNER TO gstark;
 
 SET search_path = public, pg_catalog;
 
@@ -67,7 +67,7 @@ CREATE TABLE channels (
 );
 
 
-ALTER TABLE channels OWNER TO gstark;
+-- ALTER TABLE channels OWNER TO gstark;
 
 --
 -- Name: chats_id_seq; Type: SEQUENCE; Schema: public; Owner: gstark
@@ -81,7 +81,7 @@ CREATE SEQUENCE chats_id_seq
     CACHE 1;
 
 
-ALTER TABLE chats_id_seq OWNER TO gstark;
+-- ALTER TABLE chats_id_seq OWNER TO gstark;
 
 --
 -- Name: chats_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gstark
@@ -103,7 +103,7 @@ CREATE TABLE messages (
 );
 
 
-ALTER TABLE messages OWNER TO gstark;
+-- ALTER TABLE messages OWNER TO gstark;
 
 --
 -- Name: message_id_seq; Type: SEQUENCE; Schema: public; Owner: gstark
@@ -117,7 +117,7 @@ CREATE SEQUENCE message_id_seq
     CACHE 1;
 
 
-ALTER TABLE message_id_seq OWNER TO gstark;
+-- ALTER TABLE message_id_seq OWNER TO gstark;
 
 --
 -- Name: message_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gstark
@@ -139,7 +139,7 @@ CREATE TABLE world_news_articles (
 );
 
 
-ALTER TABLE world_news_articles OWNER TO gstark;
+-- ALTER TABLE world_news_articles OWNER TO gstark;
 
 --
 -- Name: untitled_table_id_seq; Type: SEQUENCE; Schema: public; Owner: gstark
@@ -153,7 +153,7 @@ CREATE SEQUENCE untitled_table_id_seq
     CACHE 1;
 
 
-ALTER TABLE untitled_table_id_seq OWNER TO gstark;
+-- ALTER TABLE untitled_table_id_seq OWNER TO gstark;
 
 --
 -- Name: untitled_table_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gstark
@@ -280,4 +280,43 @@ CREATE EVENT TRIGGER postgraphql_watch ON ddl_command_end
 --
 -- PostgreSQL database dump complete
 --
+
+-- create table people (
+--   id               serial primary key,
+--   nickname         text not null check (char_length(nickname) < 80),
+--   created_at       timestamp default now()
+-- );
+--
+-- create table people_accounts (
+--   person_id        integer primary key references people(id) on delete cascade,
+--   email            text not null unique check (email ~* '^.+@.+\..+$'),
+--   password_hash    text not null
+-- );
+--
+-- create extension if not exists "pgcrypto";
+--
+-- create function register_person(
+--   nickname text,
+--   email text,
+--   password text
+-- ) returns forum_example.person as $$
+-- declare
+--   person forum_example.person;
+-- begin
+--   insert into person (nickname) values
+--     (nickname)
+--     returning * into person;
+--
+--   insert into .erson_account (person_id, email, password_hash) values
+--     (person.id, email, crypt(password, gen_salt('bf')));
+--
+--   return person;
+-- end;
+-- $$ language plpgsql strict security definer;
+--
+-- comment on function register_person(text, text, text, text) is 'Registers a single user and creates an account in our forum.';
+--
+-- create role cruzcomm_anonymous;
+-- grant cruzcomm_anonymous to cruzzcomm;
+
 
