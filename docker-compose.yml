@@ -28,6 +28,9 @@ services:
     ports:
       - "8080:8080"
   web:
-    build: ui/.
+    depends_on:
+      - postgraphql
+      - webrtc
+    build: .
     ports:
       - "3000:5000"
