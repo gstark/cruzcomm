@@ -22,4 +22,8 @@ services:
       PGPORT: 5432
       PGDATABASE: postgres
   postgres:
-    build: .
+    build: sql/.
+  webrtc:
+    build: RTC-SignalMaster/.
+    ports:
+      - "8080:8080"
