@@ -9,7 +9,7 @@ services:
       - postgres
     links:
       - postgres
-    #entrypoint: "bash -c 'while ! nc -z localhost 5432; do sleep 1 && echo -n .; done; postgraphql -n 0.0.0.0'"
+    entrypoint: "postgraphql -n 0.0.0.0 --cors"
     environment:
       #DB_DEFAULT_ROLE: postgres
       DB_GRAPHQL_PATH: "/graphql"
@@ -24,6 +24,10 @@ services:
   postgres:
     build: sql/.
   webrtc:
-    build: RTC-SignalMaster/.
+    build: webrtc/.
     ports:
       - "8080:8080"
+  ui:
+    build: ui/.
+    ports:
+      - "3000:5000"
