@@ -54,7 +54,7 @@ class Video extends Component {
   }
 
   _onBackButton = () => {
-    this.props.history.push('/chat')
+    this.props.history.push('/call')
   }
   render() {
     return (
